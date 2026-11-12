@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The AgriVision server runs on a laptop on the phone's hotspot / local Wi-Fi,
+     reached over plain http at an address that changes, so cleartext is allowed. -->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true" />
+</network-security-config>

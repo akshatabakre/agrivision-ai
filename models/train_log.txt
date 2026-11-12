@@ -1,0 +1,26 @@
+﻿Using cached lab features features.npz
+Using cached field features field_features.npz
+Training linear head on 26631 embeddings, 39 classes (lab + field)
+  epoch  10  loss 0.494  val_acc 0.9524 / 0.6053  best(mean) 0.7803
+  epoch  20  loss 0.442  val_acc 0.9630 / 0.6024  best(mean) 0.7830
+  epoch  30  loss 0.472  val_acc 0.9626 / 0.5994  best(mean) 0.7916
+  epoch  40  loss 0.446  val_acc 0.9674 / 0.5994  best(mean) 0.7994
+  epoch  50  loss 0.417  val_acc 0.9661 / 0.6053  best(mean) 0.7994
+  early stop at epoch 52
+Best mean val accuracy 0.7994; temperature 0.725
+Field-photo confidence threshold 0.73 (target false diagnosis rate <= 20%)
+Saved D:\minor project\models\agrivision_mobilenetv3.pt  (19.7 MB)
+Total time 2.8 min
+
+============================================================
+Test images            2270
+Accuracy               0.9696
+Precision / Recall / F1 (macro)  0.9697 / 0.9703 / 0.9697
+Category routing acc.  0.9894  (disease / pest / healthy / not-a-leaf)
+False diagnosis rate   0.0304 without abstention
+                       0.0181 at threshold 0.6 (answers 97.2% of images)
+FIELD, lab-only model   acc 0.1992  (before PlantDoc)
+FIELD (PlantDoc)       acc 0.5381  top-3 0.7373  F1 0.5273  category 0.8983  FDR@0.73 0.2769 (answers 55.1%)
+FIELD + mirror TTA     acc 0.5297  top-3 0.7542  F1 0.5151  category 0.9025  FDR@0.73 0.2667 (answers 50.8%)
+Saved metrics.json, confusion_matrix.png, threshold_curve.png
+============================================================

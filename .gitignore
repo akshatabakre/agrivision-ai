@@ -1,0 +1,29 @@
+# Python
+.venv/
+.pipcache/
+__pycache__/
+*.pyc
+
+# Datasets (several GB) - re-create with scripts/prepare_data.py and scripts/add_field_data.py
+data/
+*.zip
+
+# Runtime data: uploaded photos, diagnosis history, generated reports
+storage/
+
+# Model caches / comparison copies (the trained model itself is committed)
+models/.torch/
+models/lab_only_model_backup.pt
+
+# Android build output and machine-specific settings
+android/.gradle/
+android/.kotlin/
+android/build/
+android/app/build/
+android/local.properties
+
+# Editor / tool folders and personal screenshots
+.github/modernize/
+.vscode/
+.idea/
+ss/

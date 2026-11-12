@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.AgriVision" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/cream</item>
+        <item name="android:statusBarColor">@color/ink</item>
+        <item name="android:navigationBarColor">@color/cream</item>
+    </style>
+    <color name="cream">#F3EBDD</color>
+    <color name="ink">#1F1A15</color>
+    <color name="leaf_green">#3A6B35</color>
+</resources>
