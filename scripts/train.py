@@ -38,7 +38,8 @@ from agrivision.model import TRANSFORM, AgriVisionNet, build_backbone, build_hea
 
 FIELD_MANIFEST = config.DATA_DIR / "field_manifest.csv"
 FIELD_CACHE = config.DATA_DIR / "field_features.npz"
-FIELD_REPEAT = 4     # field photos count this many times (x2 again with mirroring)
+FEATURE_STORE = config.DATA_DIR / "feature_store.npz"
+FIELD_REPEAT = 8     # field photos count this many times (x2 again with mirroring)
 HEAD_KIND = "mlp"
 
 
@@ -77,21 +78,30 @@ def read_manifest(path):
 
 
 def lab_features(backbone, classes, augment, reuse):
-    """PlantVillage embeddings - reused from cache when the class list matches."""
-    if config.FEATURE_CACHE.exists() and (reuse or not augment):
+    """PlantVillage embeddings. Every image's embedding is kept in a per-image store
+    (data/feature_store.npz), so enlarging the dataset only processes new images."""
+    if reuse and config.FEATURE_CACHE.exists():
         npz = np.load(config.FEATURE_CACHE)
         if [str(c) for c in npz["classes"]] == classes:
             print("Using cached lab features", config.FEATURE_CACHE.name)
             return {k: npz[k] for k in npz.files if k != "classes"}
     rows = read_manifest(config.MANIFEST_PATH)
+    store = {}
+    if FEATURE_STORE.exists():
+        s = np.load(FEATURE_STORE)
+        store = dict(zip(s["paths"].tolist(), s["feats"]))
+    missing = sorted({r["path"] for r in rows} - store.keys())
+    print(f"Lab images: {len(rows)} in manifest, {len(rows) - len(missing)} cached, {len(missing)} to extract")
+    if missing:
+        store.update(zip(missing, extract(backbone, missing, tag="lab")))
+        np.savez(FEATURE_STORE, paths=np.array(list(store)), feats=np.stack(list(store.values())))
     idx = {c: i for i, c in enumerate(classes)}
     data = {}
     for split in ("train", "val", "test"):
         part = [r for r in rows if r["split"] == split]
         paths = [r["path"] for r in part]
         y = np.array([idx[r["label"]] for r in part])
-        print(f"Extracting lab {split} features ({len(paths)} images)")
-        x = extract(backbone, paths, tag=split)
+        x = np.stack([store[p] for p in paths])
         if augment and split == "train":
             x = np.concatenate([x, extract(backbone, paths, flip=True, tag="train-flip")])
             y = np.concatenate([y, y])
@@ -102,7 +112,7 @@ def lab_features(backbone, classes, augment, reuse):
 
 def field_features(backbone, classes, reuse):
     """PlantDoc embeddings: train + mirrored train, val, test + mirrored test (for TTA)."""
-    if reuse and FIELD_CACHE.exists():
+    if FIELD_CACHE.exists():   # PlantDoc split is fixed; delete the cache to force re-extraction
         npz = np.load(FIELD_CACHE)
         if [str(c) for c in npz["classes"]] == classes:
             print("Using cached field features", FIELD_CACHE.name)

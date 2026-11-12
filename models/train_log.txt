@@ -1,26 +1,67 @@
-﻿Using cached lab features features.npz
+﻿Lab images: 41141 in manifest, 15131 cached, 26010 to extract
+  [lab] 640/26010 images  11 img/s  ETA 38.0 min
+  [lab] 1280/26010 images  17 img/s  ETA 23.7 min
+  [lab] 1920/26010 images  22 img/s  ETA 18.7 min
+  [lab] 2560/26010 images  24 img/s  ETA 16.1 min
+  [lab] 3200/26010 images  26 img/s  ETA 14.6 min
+  [lab] 3840/26010 images  27 img/s  ETA 13.5 min
+  [lab] 4480/26010 images  29 img/s  ETA 12.5 min
+  [lab] 5120/26010 images  30 img/s  ETA 11.6 min
+  [lab] 5760/26010 images  31 img/s  ETA 10.9 min
+  [lab] 6400/26010 images  32 img/s  ETA 10.3 min
+  [lab] 7040/26010 images  32 img/s  ETA 9.8 min
+  [lab] 7680/26010 images  33 img/s  ETA 9.3 min
+  [lab] 8320/26010 images  33 img/s  ETA 8.8 min
+  [lab] 8960/26010 images  34 img/s  ETA 8.4 min
+  [lab] 9600/26010 images  34 img/s  ETA 8.0 min
+  [lab] 10240/26010 images  35 img/s  ETA 7.6 min
+  [lab] 10880/26010 images  35 img/s  ETA 7.2 min
+  [lab] 11520/26010 images  35 img/s  ETA 6.9 min
+  [lab] 12160/26010 images  35 img/s  ETA 6.5 min
+  [lab] 12800/26010 images  36 img/s  ETA 6.2 min
+  [lab] 13440/26010 images  36 img/s  ETA 5.9 min
+  [lab] 14080/26010 images  36 img/s  ETA 5.5 min
+  [lab] 14720/26010 images  36 img/s  ETA 5.2 min
+  [lab] 15360/26010 images  36 img/s  ETA 4.9 min
+  [lab] 16000/26010 images  36 img/s  ETA 4.6 min
+  [lab] 16640/26010 images  36 img/s  ETA 4.3 min
+  [lab] 17280/26010 images  36 img/s  ETA 4.0 min
+  [lab] 17920/26010 images  36 img/s  ETA 3.7 min
+  [lab] 18560/26010 images  36 img/s  ETA 3.4 min
+  [lab] 19200/26010 images  36 img/s  ETA 3.2 min
+  [lab] 19840/26010 images  36 img/s  ETA 2.9 min
+  [lab] 20480/26010 images  36 img/s  ETA 2.6 min
+  [lab] 21120/26010 images  36 img/s  ETA 2.3 min
+  [lab] 21760/26010 images  35 img/s  ETA 2.0 min
+  [lab] 22400/26010 images  35 img/s  ETA 1.7 min
+  [lab] 23040/26010 images  35 img/s  ETA 1.4 min
+  [lab] 23680/26010 images  36 img/s  ETA 1.1 min
+  [lab] 24320/26010 images  36 img/s  ETA 0.8 min
+  [lab] 24960/26010 images  36 img/s  ETA 0.5 min
+  [lab] 25600/26010 images  36 img/s  ETA 0.2 min
+  [lab] 26010/26010 images  36 img/s  ETA 0.0 min
 Using cached field features field_features.npz
-Training linear head on 26631 embeddings, 39 classes (lab + field)
-  epoch  10  loss 0.494  val_acc 0.9524 / 0.6053  best(mean) 0.7803
-  epoch  20  loss 0.442  val_acc 0.9630 / 0.6024  best(mean) 0.7830
-  epoch  30  loss 0.472  val_acc 0.9626 / 0.5994  best(mean) 0.7916
-  epoch  40  loss 0.446  val_acc 0.9674 / 0.5994  best(mean) 0.7994
-  epoch  50  loss 0.417  val_acc 0.9661 / 0.6053  best(mean) 0.7994
-  early stop at epoch 52
-Best mean val accuracy 0.7994; temperature 0.725
-Field-photo confidence threshold 0.73 (target false diagnosis rate <= 20%)
+Training mlp head on 44841 embeddings, 39 classes (lab + field)
+  epoch  10  loss 0.511  val_acc 0.9747 / 0.6053  best(mean) 0.7900
+  epoch  20  loss 0.506  val_acc 0.9768 / 0.6142  best(mean) 0.7989
+  epoch  30  loss 0.475  val_acc 0.9794 / 0.6172  best(mean) 0.8052
+  epoch  40  loss 0.453  val_acc 0.9786 / 0.6083  best(mean) 0.8052
+  early stop at epoch 42
+Best mean val accuracy 0.8052; temperature 0.679
+Field-photo confidence threshold 0.76 (target false diagnosis rate <= 20%)
 Saved D:\minor project\models\agrivision_mobilenetv3.pt  (19.7 MB)
-Total time 2.8 min
+Total time 17.8 min
 
 ============================================================
-Test images            2270
-Accuracy               0.9696
-Precision / Recall / F1 (macro)  0.9697 / 0.9703 / 0.9697
-Category routing acc.  0.9894  (disease / pest / healthy / not-a-leaf)
-False diagnosis rate   0.0304 without abstention
-                       0.0181 at threshold 0.6 (answers 97.2% of images)
+Test images            6170
+Accuracy               0.9802
+Precision / Recall / F1 (macro)  0.9804 / 0.9771 / 0.9785
+Category routing acc.  0.9951  (disease / pest / healthy / not-a-leaf)
+False diagnosis rate   0.0198 without abstention
+                       0.0130 at threshold 0.6 (answers 98.4% of images)
 FIELD, lab-only model   acc 0.1992  (before PlantDoc)
-FIELD (PlantDoc)       acc 0.5381  top-3 0.7373  F1 0.5273  category 0.8983  FDR@0.73 0.2769 (answers 55.1%)
-FIELD + mirror TTA     acc 0.5297  top-3 0.7542  F1 0.5151  category 0.9025  FDR@0.73 0.2667 (answers 50.8%)
+FIELD (PlantDoc)       acc 0.5254  top-3 0.7669  F1 0.5174  category 0.8814  FDR@0.76 0.2459 (answers 51.7%)
+FIELD + mirror TTA     acc 0.5339  top-3 0.7966  F1 0.5289  category 0.8898  FDR@0.76 0.2018 (answers 48.3%)
 Saved metrics.json, confusion_matrix.png, threshold_curve.png
 ============================================================
+EXIT 0

@@ -45,7 +45,8 @@ def evaluate():
 
     acc = accuracy_score(y, pred)
     p, r, f1, _ = precision_recall_fscore_support(y, pred, average="macro", zero_division=0)
-    names = [f"{class_info(c)['crop']} - {class_info(c)['name']}" for c in classes]
+    names = [f"{class_info(c)['crop']} - {class_info(c)['name']}" if class_info(c)["crop"] != "-"
+             else class_info(c)["name"] for c in classes]
     report = classification_report(y, pred, target_names=names, output_dict=True, zero_division=0)
 
     cats = np.array([class_info(c)["category"] for c in classes])

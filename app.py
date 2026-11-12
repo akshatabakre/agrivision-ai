@@ -65,7 +65,7 @@ def health_bar(score: int | None, colour: str) -> str:
 
 # ---------------------------------------------------------------- header
 html('<div class="kicker">Crop health intelligence</div>'
-     '<p class="brand">AgriVision AI</p>'
+     '<div class="brand">AgriVision AI</div>'
      '<div class="tagline">Detect crop diseases, pest damage and nutrient deficiencies from a single photograph.</div>')
 
 if not config.MODEL_PATH.exists():
@@ -292,7 +292,7 @@ with tab_model:
         c[4].metric("Coverage", f"{m['coverage_at_threshold']:.1%}",
                     help=f"Share of images answered at confidence threshold {m['confidence_threshold']:.0%}; "
                          "the rest get a re-capture request.")
-        st.caption(f"MobileNetV3-Large backbone (ImageNet) + linear head - {m['num_classes']} classes - "
+        st.caption(f"MobileNetV3-Large backbone (ImageNet) + MLP classification head - {m['num_classes']} classes - "
                    f"{m['train_images']} training / {m['test_images']} test images - "
                    f"temperature-calibrated (T = {m['temperature']:.2f})")
         if "field" in m:
@@ -305,10 +305,10 @@ with tab_model:
             fc[3].metric("False diagnosis rate", f"{fm['false_diagnosis_rate_at_threshold']:.1%}")
             fc[4].metric("Coverage", f"{fm['coverage_at_threshold']:.1%}")
             if m.get("field_baseline_accuracy") is not None:
-                st.caption(f"Before adding field photos to training, field accuracy was "
-                           f"{m['field_baseline_accuracy']:.1%} - lab images are not field images (slide 13).")
-            st.caption("The lab test set above (PlantVillage) has plain backgrounds; field accuracy is the "
-                       "honest estimate for phone photos taken on a farm.")
+                st.caption(f"A model trained on laboratory images only reached {m['field_baseline_accuracy']:.1%} "
+                           "on the same field photographs.")
+            st.caption("The laboratory test set (PlantVillage) has plain backgrounds; field accuracy is the "
+                       "representative estimate for photographs taken on a farm.")
         g1, g2 = st.columns([1.3, 1])
         if config.CONFUSION_PNG.exists():
             g1.image(str(config.CONFUSION_PNG), width="stretch")

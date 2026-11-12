@@ -1,283 +1,283 @@
 {
-  "test_images": 2270,
-  "train_images": 26631,
+  "test_images": 6170,
+  "train_images": 60881,
   "num_classes": 39,
-  "accuracy": 0.9696035242290749,
-  "precision_macro": 0.9696675545973128,
-  "recall_macro": 0.9703147800708777,
-  "f1_macro": 0.9696540089970654,
-  "category_accuracy": 0.9894273127753304,
-  "val_accuracy": 0.7994457483291626,
-  "temperature": 0.724740743637085,
+  "accuracy": 0.9786061588330632,
+  "precision_macro": 0.9793498368272235,
+  "recall_macro": 0.973872800136614,
+  "f1_macro": 0.9761598432105026,
+  "category_accuracy": 0.9940032414910859,
+  "val_accuracy": 0.8034379482269287,
+  "temperature": 0.664018452167511,
   "confidence_threshold": 0.6,
-  "coverage_at_threshold": 0.9722466960352423,
-  "false_diagnosis_rate_at_threshold": 0.01812415043044857,
-  "false_diagnosis_rate_no_abstention": 0.03039647577092511,
+  "coverage_at_threshold": 0.9834683954619124,
+  "false_diagnosis_rate_at_threshold": 0.013183915622940013,
+  "false_diagnosis_rate_no_abstention": 0.02139384116693679,
   "threshold_sweep": [
     {
       "threshold": 0.0,
       "coverage": 1.0,
-      "false_diagnosis_rate": 0.03039647577092511,
-      "accuracy_answered": 0.9696035242290749
+      "false_diagnosis_rate": 0.02139384116693679,
+      "accuracy_answered": 0.9786061588330632
     },
     {
       "threshold": 0.05,
       "coverage": 1.0,
-      "false_diagnosis_rate": 0.03039647577092511,
-      "accuracy_answered": 0.9696035242290749
+      "false_diagnosis_rate": 0.02139384116693679,
+      "accuracy_answered": 0.9786061588330632
     },
     {
       "threshold": 0.1,
       "coverage": 1.0,
-      "false_diagnosis_rate": 0.03039647577092511,
-      "accuracy_answered": 0.9696035242290749
+      "false_diagnosis_rate": 0.02139384116693679,
+      "accuracy_answered": 0.9786061588330632
     },
     {
       "threshold": 0.15,
       "coverage": 1.0,
-      "false_diagnosis_rate": 0.03039647577092511,
-      "accuracy_answered": 0.9696035242290749
+      "false_diagnosis_rate": 0.02139384116693679,
+      "accuracy_answered": 0.9786061588330632
     },
     {
       "threshold": 0.2,
-      "coverage": 0.9995594713656387,
-      "false_diagnosis_rate": 0.02996914940502424,
-      "accuracy_answered": 0.9700308505949757
+      "coverage": 0.999837925445705,
+      "false_diagnosis_rate": 0.02123520829956233,
+      "accuracy_answered": 0.9787647917004376
     },
     {
       "threshold": 0.25,
-      "coverage": 0.9995594713656387,
-      "false_diagnosis_rate": 0.02996914940502424,
-      "accuracy_answered": 0.9700308505949757
+      "coverage": 0.999513776337115,
+      "false_diagnosis_rate": 0.02107994162477704,
+      "accuracy_answered": 0.978920058375223
     },
     {
       "threshold": 0.3,
-      "coverage": 0.9995594713656387,
-      "false_diagnosis_rate": 0.02996914940502424,
-      "accuracy_answered": 0.9700308505949757
+      "coverage": 0.9988654781199352,
+      "false_diagnosis_rate": 0.020606847314619505,
+      "accuracy_answered": 0.9793931526853805
     },
     {
       "threshold": 0.35,
-      "coverage": 0.9991189427312775,
-      "false_diagnosis_rate": 0.029541446208112873,
-      "accuracy_answered": 0.9704585537918872
+      "coverage": 0.9980551053484603,
+      "false_diagnosis_rate": 0.01997401753816174,
+      "accuracy_answered": 0.9800259824618383
     },
     {
       "threshold": 0.4,
-      "coverage": 0.9960352422907489,
-      "false_diagnosis_rate": 0.02830605926581159,
-      "accuracy_answered": 0.9716939407341885
+      "coverage": 0.9974068071312804,
+      "false_diagnosis_rate": 0.019824504387390314,
+      "accuracy_answered": 0.9801754956126096
     },
     {
       "threshold": 0.45,
-      "coverage": 0.9938325991189427,
-      "false_diagnosis_rate": 0.027039007092198582,
-      "accuracy_answered": 0.9729609929078015
+      "coverage": 0.9962722852512156,
+      "false_diagnosis_rate": 0.018870993980803646,
+      "accuracy_answered": 0.9811290060191964
     },
     {
       "threshold": 0.5,
-      "coverage": 0.9885462555066079,
-      "false_diagnosis_rate": 0.02540106951871658,
-      "accuracy_answered": 0.9745989304812834
+      "coverage": 0.993679092382496,
+      "false_diagnosis_rate": 0.01745229163268635,
+      "accuracy_answered": 0.9825477083673136
     },
     {
       "threshold": 0.55,
-      "coverage": 0.9819383259911895,
-      "false_diagnosis_rate": 0.021982951996410947,
-      "accuracy_answered": 0.978017048003589
+      "coverage": 0.9876823338735818,
+      "false_diagnosis_rate": 0.01526091237282573,
+      "accuracy_answered": 0.9847390876271742
     },
     {
       "threshold": 0.6,
-      "coverage": 0.9722466960352423,
-      "false_diagnosis_rate": 0.01812415043044857,
-      "accuracy_answered": 0.9818758495695514
+      "coverage": 0.9834683954619124,
+      "false_diagnosis_rate": 0.013183915622940013,
+      "accuracy_answered": 0.98681608437706
     },
     {
       "threshold": 0.65,
-      "coverage": 0.9616740088105726,
-      "false_diagnosis_rate": 0.014658726523133303,
-      "accuracy_answered": 0.9853412734768667
+      "coverage": 0.9782820097244732,
+      "false_diagnosis_rate": 0.01143141153081511,
+      "accuracy_answered": 0.9885685884691849
     },
     {
       "threshold": 0.7,
-      "coverage": 0.9541850220264317,
-      "false_diagnosis_rate": 0.013850415512465374,
-      "accuracy_answered": 0.9861495844875346
+      "coverage": 0.972933549432739,
+      "false_diagnosis_rate": 0.009495252373813094,
+      "accuracy_answered": 0.9905047476261869
     },
     {
       "threshold": 0.75,
-      "coverage": 0.9436123348017621,
-      "false_diagnosis_rate": 0.011204481792717087,
-      "accuracy_answered": 0.988795518207283
+      "coverage": 0.96709886547812,
+      "false_diagnosis_rate": 0.008211831741243505,
+      "accuracy_answered": 0.9917881682587565
     },
     {
       "threshold": 0.8,
-      "coverage": 0.9303964757709251,
-      "false_diagnosis_rate": 0.00946969696969697,
-      "accuracy_answered": 0.990530303030303
+      "coverage": 0.9589951377633712,
+      "false_diagnosis_rate": 0.005915159709312151,
+      "accuracy_answered": 0.9940848402906879
     },
     {
       "threshold": 0.85,
-      "coverage": 0.913215859030837,
-      "false_diagnosis_rate": 0.00723589001447178,
-      "accuracy_answered": 0.9927641099855282
+      "coverage": 0.946677471636953,
+      "false_diagnosis_rate": 0.005136106831022085,
+      "accuracy_answered": 0.9948638931689779
     },
     {
       "threshold": 0.9,
-      "coverage": 0.885022026431718,
-      "false_diagnosis_rate": 0.004479840716774514,
-      "accuracy_answered": 0.9955201592832255
+      "coverage": 0.9291734197730956,
+      "false_diagnosis_rate": 0.0031397174254317113,
+      "accuracy_answered": 0.9968602825745683
     },
     {
       "threshold": 0.95,
-      "coverage": 0.8317180616740089,
-      "false_diagnosis_rate": 0.00211864406779661,
-      "accuracy_answered": 0.9978813559322034
+      "coverage": 0.893679092382496,
+      "false_diagnosis_rate": 0.0014508523757707653,
+      "accuracy_answered": 0.9985491476242292
     }
   ],
   "per_class": {
     "Apple - Apple Scab": {
-      "precision": 0.9672131147540983,
-      "recall": 0.9833333333333333,
-      "f1-score": 0.9752066115702479,
-      "support": 60.0
+      "precision": 0.9891304347826086,
+      "recall": 0.9680851063829787,
+      "f1-score": 0.978494623655914,
+      "support": 94.0
     },
     "Apple - Black Rot": {
       "precision": 1.0,
-      "recall": 1.0,
-      "f1-score": 1.0,
-      "support": 60.0
+      "recall": 0.978494623655914,
+      "f1-score": 0.9891304347826086,
+      "support": 93.0
     },
     "Apple - Cedar Apple Rust": {
-      "precision": 0.975609756097561,
+      "precision": 1.0,
       "recall": 0.975609756097561,
-      "f1-score": 0.975609756097561,
+      "f1-score": 0.9876543209876543,
       "support": 41.0
     },
     "Apple - Healthy": {
-      "precision": 0.9672131147540983,
-      "recall": 0.9833333333333333,
-      "f1-score": 0.9752066115702479,
-      "support": 60.0
+      "precision": 0.9824561403508771,
+      "recall": 0.9955555555555555,
+      "f1-score": 0.9889624724061811,
+      "support": 225.0
     },
-    "- - No leaf detected": {
+    "No leaf detected": {
       "precision": 1.0,
-      "recall": 1.0,
-      "f1-score": 1.0,
-      "support": 60.0
+      "recall": 0.9941520467836257,
+      "f1-score": 0.9970674486803519,
+      "support": 171.0
     },
     "Blueberry - Healthy": {
-      "precision": 1.0,
+      "precision": 0.995575221238938,
       "recall": 1.0,
-      "f1-score": 1.0,
-      "support": 60.0
+      "f1-score": 0.9977827050997783,
+      "support": 225.0
     },
     "Cherry - Powdery Mildew": {
       "precision": 1.0,
-      "recall": 1.0,
-      "f1-score": 1.0,
-      "support": 60.0
+      "recall": 0.9873417721518988,
+      "f1-score": 0.9936305732484076,
+      "support": 158.0
     },
     "Cherry - Healthy": {
-      "precision": 1.0,
-      "recall": 1.0,
-      "f1-score": 1.0,
-      "support": 60.0
+      "precision": 0.9921875,
+      "recall": 0.9921875,
+      "f1-score": 0.9921875,
+      "support": 128.0
     },
     "Maize (Corn) - Gray Leaf Spot": {
-      "precision": 0.8688524590163934,
-      "recall": 0.8833333333333333,
-      "f1-score": 0.8760330578512396,
-      "support": 60.0
+      "precision": 0.9193548387096774,
+      "recall": 0.7402597402597403,
+      "f1-score": 0.8201438848920863,
+      "support": 77.0
     },
     "Maize (Corn) - Common Rust": {
       "precision": 1.0,
       "recall": 1.0,
       "f1-score": 1.0,
-      "support": 60.0
+      "support": 179.0
     },
     "Maize (Corn) - Northern Leaf Blight": {
-      "precision": 0.8813559322033898,
-      "recall": 0.8666666666666667,
-      "f1-score": 0.8739495798319328,
-      "support": 60.0
+      "precision": 0.8773006134969326,
+      "recall": 0.9662162162162162,
+      "f1-score": 0.9196141479099679,
+      "support": 148.0
     },
     "Maize (Corn) - Healthy": {
       "precision": 1.0,
       "recall": 1.0,
       "f1-score": 1.0,
-      "support": 60.0
+      "support": 174.0
     },
     "Grape - Black Rot": {
-      "precision": 1.0,
-      "recall": 0.95,
-      "f1-score": 0.9743589743589743,
-      "support": 60.0
+      "precision": 0.9567567567567568,
+      "recall": 1.0,
+      "f1-score": 0.9779005524861878,
+      "support": 177.0
     },
     "Grape - Esca (Black Measles)": {
-      "precision": 0.9523809523809523,
-      "recall": 1.0,
-      "f1-score": 0.975609756097561,
-      "support": 60.0
+      "precision": 1.0,
+      "recall": 0.961352657004831,
+      "f1-score": 0.9802955665024631,
+      "support": 207.0
     },
     "Grape - Leaf Blight (Isariopsis Leaf Spot)": {
       "precision": 1.0,
       "recall": 1.0,
       "f1-score": 1.0,
-      "support": 60.0
+      "support": 161.0
     },
     "Grape - Healthy": {
       "precision": 1.0,
       "recall": 1.0,
       "f1-score": 1.0,
-      "support": 60.0
+      "support": 63.0
     },
     "Citrus (Orange) - Huanglongbing (Citrus Greening)": {
-      "precision": 1.0,
-      "recall": 1.0,
-      "f1-score": 1.0,
-      "support": 60.0
+      "precision": 0.9955555555555555,
+      "recall": 0.9955555555555555,
+      "f1-score": 0.9955555555555555,
+      "support": 225.0
     },
     "Peach - Bacterial Spot": {
-      "precision": 1.0,
-      "recall": 0.95,
-      "f1-score": 0.9743589743589743,
-      "support": 60.0
+      "precision": 0.995575221238938,
+      "recall": 1.0,
+      "f1-score": 0.9977827050997783,
+      "support": 225.0
     },
     "Peach - Healthy": {
-      "precision": 0.9642857142857143,
-      "recall": 1.0,
-      "f1-score": 0.9818181818181818,
+      "precision": 1.0,
+      "recall": 0.9814814814814815,
+      "f1-score": 0.9906542056074766,
       "support": 54.0
     },
     "Bell Pepper - Bacterial Spot": {
       "precision": 1.0,
-      "recall": 0.9333333333333333,
-      "f1-score": 0.9655172413793104,
-      "support": 60.0
+      "recall": 0.9866666666666667,
+      "f1-score": 0.9932885906040269,
+      "support": 150.0
     },
     "Bell Pepper - Healthy": {
-      "precision": 0.9230769230769231,
-      "recall": 1.0,
-      "f1-score": 0.96,
-      "support": 60.0
+      "precision": 0.9822222222222222,
+      "recall": 0.9954954954954955,
+      "f1-score": 0.9888143176733781,
+      "support": 222.0
     },
     "Potato - Early Blight": {
-      "precision": 0.967741935483871,
+      "precision": 0.9933774834437086,
       "recall": 1.0,
-      "f1-score": 0.9836065573770492,
-      "support": 60.0
+      "f1-score": 0.9966777408637874,
+      "support": 150.0
     },
     "Potato - Late Blight": {
-      "precision": 1.0,
-      "recall": 0.9666666666666667,
-      "f1-score": 0.9830508474576272,
-      "support": 60.0
+      "precision": 0.961038961038961,
+      "recall": 0.9866666666666667,
+      "f1-score": 0.9736842105263158,
+      "support": 150.0
     },
     "Potato - Healthy": {
-      "precision": 0.92,
-      "recall": 1.0,
-      "f1-score": 0.9583333333333334,
+      "precision": 0.9545454545454546,
+      "recall": 0.9130434782608695,
+      "f1-score": 0.9333333333333333,
       "support": 23.0
     },
     "Raspberry - Healthy": {
@@ -287,107 +287,107 @@
       "support": 56.0
     },
     "Soybean - Healthy": {
-      "precision": 0.9836065573770492,
+      "precision": 0.9911894273127754,
       "recall": 1.0,
-      "f1-score": 0.9917355371900827,
-      "support": 60.0
+      "f1-score": 0.995575221238938,
+      "support": 225.0
     },
     "Squash - Powdery Mildew": {
       "precision": 1.0,
-      "recall": 1.0,
-      "f1-score": 1.0,
-      "support": 60.0
+      "recall": 0.9955555555555555,
+      "f1-score": 0.9977728285077951,
+      "support": 225.0
     },
     "Strawberry - Leaf Scorch": {
       "precision": 1.0,
-      "recall": 0.9833333333333333,
-      "f1-score": 0.9915966386554622,
-      "support": 60.0
-    },
-    "Strawberry - Healthy": {
-      "precision": 1.0,
       "recall": 1.0,
       "f1-score": 1.0,
-      "support": 60.0
+      "support": 166.0
+    },
+    "Strawberry - Healthy": {
+      "precision": 0.9855072463768116,
+      "recall": 1.0,
+      "f1-score": 0.9927007299270073,
+      "support": 68.0
     },
     "Tomato - Bacterial Spot": {
-      "precision": 0.95,
-      "recall": 0.95,
-      "f1-score": 0.95,
-      "support": 60.0
+      "precision": 0.974025974025974,
+      "recall": 1.0,
+      "f1-score": 0.9868421052631579,
+      "support": 225.0
     },
     "Tomato - Early Blight": {
-      "precision": 0.8524590163934426,
-      "recall": 0.8666666666666667,
-      "f1-score": 0.859504132231405,
-      "support": 60.0
+      "precision": 0.8951048951048951,
+      "recall": 0.8533333333333334,
+      "f1-score": 0.8737201365187713,
+      "support": 150.0
     },
     "Tomato - Late Blight": {
-      "precision": 0.9821428571428571,
-      "recall": 0.9166666666666666,
-      "f1-score": 0.9482758620689655,
-      "support": 60.0
+      "precision": 0.9769585253456221,
+      "recall": 0.9422222222222222,
+      "f1-score": 0.9592760180995475,
+      "support": 225.0
     },
     "Tomato - Leaf Mold": {
-      "precision": 0.9827586206896551,
-      "recall": 0.95,
-      "f1-score": 0.9661016949152542,
-      "support": 60.0
+      "precision": 0.9790209790209791,
+      "recall": 0.9790209790209791,
+      "f1-score": 0.9790209790209791,
+      "support": 143.0
     },
     "Tomato - Septoria Leaf Spot": {
-      "precision": 0.9814814814814815,
-      "recall": 0.8833333333333333,
-      "f1-score": 0.9298245614035088,
-      "support": 60.0
+      "precision": 0.9728506787330317,
+      "recall": 0.9555555555555556,
+      "f1-score": 0.9641255605381166,
+      "support": 225.0
     },
     "Tomato - Spider Mite Damage": {
-      "precision": 0.873015873015873,
-      "recall": 0.9166666666666666,
-      "f1-score": 0.8943089430894309,
-      "support": 60.0
+      "precision": 0.9724770642201835,
+      "recall": 0.9422222222222222,
+      "f1-score": 0.9571106094808126,
+      "support": 225.0
     },
     "Tomato - Target Spot": {
-      "precision": 0.875,
-      "recall": 0.9333333333333333,
-      "f1-score": 0.9032258064516129,
-      "support": 60.0
+      "precision": 0.8744588744588745,
+      "recall": 0.957345971563981,
+      "f1-score": 0.9140271493212669,
+      "support": 211.0
     },
     "Tomato - Tomato Yellow Leaf Curl Virus": {
-      "precision": 0.9833333333333333,
-      "recall": 0.9833333333333333,
-      "f1-score": 0.9833333333333333,
-      "support": 60.0
+      "precision": 1.0,
+      "recall": 0.9866666666666667,
+      "f1-score": 0.9932885906040269,
+      "support": 225.0
     },
     "Tomato - Tomato Mosaic Virus": {
-      "precision": 0.9824561403508771,
-      "recall": 1.0,
-      "f1-score": 0.9911504424778761,
+      "precision": 1.0,
+      "recall": 0.9642857142857143,
+      "f1-score": 0.9818181818181818,
       "support": 56.0
     },
     "Tomato - Healthy": {
-      "precision": 0.9830508474576272,
-      "recall": 0.9666666666666667,
-      "f1-score": 0.9747899159663865,
-      "support": 60.0
+      "precision": 0.9779735682819384,
+      "recall": 0.9866666666666667,
+      "f1-score": 0.9823008849557522,
+      "support": 225.0
     }
   },
   "field": {
     "dataset": "PlantDoc test split",
     "test_images": 236,
-    "confidence_threshold": 0.73,
-    "accuracy": 0.538135593220339,
-    "top3_accuracy": 0.7372881355932204,
-    "f1_macro": 0.527266472459111,
+    "confidence_threshold": 0.76,
+    "accuracy": 0.5720338983050848,
+    "top3_accuracy": 0.7923728813559322,
+    "f1_macro": 0.5598361276269175,
     "category_accuracy": 0.8983050847457628,
-    "coverage_at_threshold": 0.5508474576271186,
-    "false_diagnosis_rate_at_threshold": 0.27692307692307694,
+    "coverage_at_threshold": 0.5338983050847458,
+    "false_diagnosis_rate_at_threshold": 0.2857142857142857,
     "with_mirror_tta": {
-      "accuracy": 0.5296610169491526,
-      "top3_accuracy": 0.7542372881355932,
-      "f1_macro": 0.5150811431685184,
+      "accuracy": 0.5677966101694916,
+      "top3_accuracy": 0.8220338983050848,
+      "f1_macro": 0.5522052835254851,
       "category_accuracy": 0.902542372881356,
-      "coverage_at_threshold": 0.5084745762711864,
-      "false_diagnosis_rate_at_threshold": 0.26666666666666666
+      "coverage_at_threshold": 0.5169491525423728,
+      "false_diagnosis_rate_at_threshold": 0.26229508196721313
     }
   },
   "field_baseline_accuracy": 0.19915254237288135
