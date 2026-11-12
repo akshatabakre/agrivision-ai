@@ -1,0 +1,396 @@
+{
+ "lab": {
+  "accuracy": 0.9786061588330632,
+  "precision_macro": 0.9793498368272235,
+  "recall_macro": 0.973872800136614,
+  "f1_macro": 0.9761598432105026,
+  "category_accuracy": 0.9940032414910859,
+  "coverage_at_threshold": 0.9834683954619124,
+  "false_diagnosis_rate_at_threshold": 0.013183915622940013,
+  "false_diagnosis_rate_no_abstention": 0.02139384116693679,
+  "test_images": 6170,
+  "train_images": 60881
+ },
+ "field": {
+  "dataset": "PlantDoc test split",
+  "test_images": 236,
+  "confidence_threshold": 0.76,
+  "accuracy": 0.5720338983050848,
+  "top3_accuracy": 0.7923728813559322,
+  "f1_macro": 0.5598361276269175,
+  "category_accuracy": 0.8983050847457628,
+  "coverage_at_threshold": 0.5338983050847458,
+  "false_diagnosis_rate_at_threshold": 0.2857142857142857
+ },
+ "field_baseline": 0.19915254237288135,
+ "field_400": 0.538135593220339,
+ "lab_400": 0.9696035242290749,
+ "temperature": 0.664018452167511,
+ "field_threshold": 0.76,
+ "train_size": 60881,
+ "cats": {
+  "disease": 25,
+  "healthy": 12,
+  "invalid": 1,
+  "pest": 1
+ },
+ "crops": [
+  "Apple",
+  "Bell Pepper",
+  "Blueberry",
+  "Cherry",
+  "Citrus (Orange)",
+  "Grape",
+  "Maize (Corn)",
+  "Peach",
+  "Potato",
+  "Raspberry",
+  "Soybean",
+  "Squash",
+  "Strawberry",
+  "Tomato"
+ ],
+ "ex": {
+  "tomato": {
+   "crop": "Tomato",
+   "display_name": "Early Blight",
+   "category_label": "Disease",
+   "confidence": 0.9232020378112793,
+   "severity": "Mild",
+   "health_score": 78,
+   "cause": "Fungal infection (Alternaria solani)",
+   "symptoms": [
+    "Circular brown lesions with concentric rings",
+    "Yellowing around the affected regions",
+    "Lower, older leaves affected first"
+   ],
+   "damage": {
+    "green": 0.8537,
+    "yellow": 0.0253,
+    "brown": 0.1126,
+    "white": 0.0083,
+    "affected": 0.1463
+   },
+   "photo_type": "field",
+   "top_k": [
+    {
+     "label": "Tomato___Early_blight",
+     "crop": "Tomato",
+     "name": "Early Blight",
+     "probability": 0.9232020378112793
+    },
+    {
+     "label": "Tomato___Septoria_leaf_spot",
+     "crop": "Tomato",
+     "name": "Septoria Leaf Spot",
+     "probability": 0.01652074046432972
+    },
+    {
+     "label": "Potato___Early_blight",
+     "crop": "Potato",
+     "name": "Early Blight",
+     "probability": 0.013186722062528133
+    },
+    {
+     "label": "Tomato___Late_blight",
+     "crop": "Tomato",
+     "name": "Late Blight",
+     "probability": 0.011917437426745892
+    },
+    {
+     "label": "Tomato___Bacterial_spot",
+     "crop": "Tomato",
+     "name": "Bacterial Spot",
+     "probability": 0.005622480530291796
+    }
+   ],
+   "category_probs": {
+    "Disease": 0.9910401701927185,
+    "Pest": 0.0008804698009043932,
+    "Nutrient deficiency": 0.0,
+    "Healthy": 0.007138327229768038,
+    "Not a leaf": 0.0009411470382474363
+   },
+   "rec": {
+    "urgency": "Monitor closely",
+    "actions": [
+     "Remove severely affected leaves",
+     "Avoid prolonged leaf wetness",
+     "Improve plant spacing and airflow",
+     "Monitor nearby plants",
+     "Re-check the plant in 3-4 days and treat if the problem spreads"
+    ],
+    "notes": [],
+    "prevention": [
+     "Mulch to stop soil splashing onto leaves",
+     "Stake plants and rotate crops for 2-3 years"
+    ]
+   }
+  },
+  "potato": {
+   "crop": "Potato",
+   "display_name": "Early Blight",
+   "category_label": "Disease",
+   "confidence": 0.9996129870414734,
+   "severity": "Severe",
+   "health_score": 16,
+   "cause": "Fungal infection (Alternaria solani)",
+   "symptoms": [
+    "Dark brown spots with concentric 'target' rings",
+    "Yellowing around lesions",
+    "Older, lower leaves affected first"
+   ],
+   "damage": {
+    "green": 0.3147,
+    "yellow": 0.4082,
+    "brown": 0.2737,
+    "white": 0.0033,
+    "affected": 0.6853
+   },
+   "photo_type": "plain background",
+   "top_k": [
+    {
+     "label": "Potato___Early_blight",
+     "crop": "Potato",
+     "name": "Early Blight",
+     "probability": 0.9996129870414734
+    },
+    {
+     "label": "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)",
+     "crop": "Grape",
+     "name": "Leaf Blight (Isariopsis Leaf Spot)",
+     "probability": 0.0001361729810014367
+    },
+    {
+     "label": "Potato___Late_blight",
+     "crop": "Potato",
+     "name": "Late Blight",
+     "probability": 4.2694216972449794e-05
+    },
+    {
+     "label": "Tomato___Tomato_mosaic_virus",
+     "crop": "Tomato",
+     "name": "Tomato Mosaic Virus",
+     "probability": 2.6277321012457833e-05
+    },
+    {
+     "label": "Tomato___Bacterial_spot",
+     "crop": "Tomato",
+     "name": "Bacterial Spot",
+     "probability": 1.576385875523556e-05
+    }
+   ],
+   "category_probs": {
+    "Disease": 0.9999082088470459,
+    "Pest": 7.265623935381882e-06,
+    "Nutrient deficiency": 6.397302975528873e-05,
+    "Healthy": 1.4521485281875359e-05,
+    "Not a leaf": 5.821985723741818e-06
+   },
+   "rec": {
+    "urgency": "Act today",
+    "actions": [
+     "Isolate or remove the most heavily affected plants first",
+     "Remove severely affected lower leaves",
+     "Avoid overhead watering",
+     "Keep fertilisation balanced (stressed plants are more susceptible)",
+     "Apply a locally approved protectant fungicide (e.g. chlorothalonil or mancozeb)",
+     "Inspect the whole field - severe cases rarely stay on one plant",
+     "Consult your nearest Krishi Vigyan Kendra (KVK) or the Kisan Call Centre (1800-180-1551) for locally approved products and doses"
+    ],
+    "notes": [],
+    "prevention": [
+     "Rotate crops for 2-3 years",
+     "Destroy volunteer plants and crop debris"
+    ]
+   }
+  },
+  "mite": {
+   "crop": "Tomato",
+   "display_name": "Spider Mite Damage",
+   "category_label": "Pest",
+   "confidence": 0.7616366147994995,
+   "severity": "Mild",
+   "health_score": 89,
+   "cause": "Pest infestation (two-spotted spider mite, Tetranychus urticae)",
+   "symptoms": [
+    "Fine yellow / white stippling on leaves",
+    "Bronzing and drying of leaves",
+    "Fine webbing on the leaf underside"
+   ],
+   "damage": {
+    "green": 0.9937,
+    "yellow": 0.0008,
+    "brown": 0.0044,
+    "white": 0.0012,
+    "affected": 0.0063
+   },
+   "photo_type": "plain background",
+   "top_k": [
+    {
+     "label": "Tomato___Spider_mites Two-spotted_spider_mite",
+     "crop": "Tomato",
+     "name": "Spider Mite Damage",
+     "probability": 0.7616366147994995
+    },
+    {
+     "label": "Tomato___Target_Spot",
+     "crop": "Tomato",
+     "name": "Target Spot",
+     "probability": 0.21917903423309326
+    },
+    {
+     "label": "Tomato___healthy",
+     "crop": "Tomato",
+     "name": "Healthy",
+     "probability": 0.016533588990569115
+    },
+    {
+     "label": "Blueberry___healthy",
+     "crop": "Blueberry",
+     "name": "Healthy",
+     "probability": 0.0003207360568922013
+    },
+    {
+     "label": "Apple___Cedar_apple_rust",
+     "crop": "Apple",
+     "name": "Cedar Apple Rust",
+     "probability": 0.00030241667991504073
+    }
+   ],
+   "category_probs": {
+    "Disease": 0.22107195854187012,
+    "Pest": 0.7616366147994995,
+    "Nutrient deficiency": 0.0,
+    "Healthy": 0.017240209504961967,
+    "Not a leaf": 5.116097963764332e-05
+   },
+   "rec": {
+    "urgency": "Monitor closely",
+    "actions": [
+     "Inspect the undersides of leaves",
+     "Remove heavily infested portions",
+     "Spray plants with a strong jet of water to dislodge mites",
+     "Re-check the plant in 3-4 days and treat if the problem spreads"
+    ],
+    "notes": [],
+    "prevention": [
+     "Release predatory mites (Phytoseiulus persimilis) where available",
+     "Avoid water stress - mites thrive on dry, stressed plants"
+    ]
+   }
+  },
+  "apple": {
+   "crop": "Apple",
+   "display_name": "Cedar Apple Rust",
+   "category_label": "Disease",
+   "confidence": 0.9507309198379517,
+   "severity": "Mild",
+   "health_score": 85,
+   "cause": "Fungal infection (Gymnosporangium juniperi-virginianae)",
+   "symptoms": [
+    "Bright yellow-orange spots on the upper leaf surface",
+    "Small tube-like structures under the spots",
+    "Premature leaf drop"
+   ],
+   "damage": {
+    "green": 0.9009,
+    "yellow": 0.0854,
+    "brown": 0.0052,
+    "white": 0.0084,
+    "affected": 0.0991
+   },
+   "photo_type": "plain background",
+   "top_k": [
+    {
+     "label": "Apple___Cedar_apple_rust",
+     "crop": "Apple",
+     "name": "Cedar Apple Rust",
+     "probability": 0.9507309198379517
+    },
+    {
+     "label": "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)",
+     "crop": "Grape",
+     "name": "Leaf Blight (Isariopsis Leaf Spot)",
+     "probability": 0.007893336936831474
+    },
+    {
+     "label": "Pepper,_bell___Bacterial_spot",
+     "crop": "Bell Pepper",
+     "name": "Bacterial Spot",
+     "probability": 0.007132239639759064
+    },
+    {
+     "label": "Apple___Black_rot",
+     "crop": "Apple",
+     "name": "Black Rot",
+     "probability": 0.003797510638833046
+    },
+    {
+     "label": "Peach___Bacterial_spot",
+     "crop": "Peach",
+     "name": "Bacterial Spot",
+     "probability": 0.0030844570137560368
+    }
+   ],
+   "category_probs": {
+    "Disease": 0.9894559383392334,
+    "Pest": 7.371044193860143e-05,
+    "Nutrient deficiency": 0.0,
+    "Healthy": 0.010192809626460075,
+    "Not a leaf": 0.0002777166955638677
+   },
+   "rec": {
+    "urgency": "Monitor closely",
+    "actions": [
+     "Remove infected leaves",
+     "Remove galls from nearby juniper / cedar trees (the alternate host)",
+     "Monitor neighbouring trees",
+     "Re-check the plant in 3-4 days and treat if the problem spreads"
+    ],
+    "notes": [],
+    "prevention": [
+     "Plant rust-resistant varieties",
+     "Avoid planting near junipers"
+    ]
+   }
+  }
+ },
+ "recA": {
+  "urgency": "Monitor closely",
+  "actions": [
+   "Remove severely affected leaves",
+   "Avoid prolonged leaf wetness",
+   "Improve plant spacing and airflow",
+   "Monitor nearby plants",
+   "Re-check the plant in 3-4 days and treat if the problem spreads"
+  ],
+  "notes": [],
+  "prevention": [
+   "Mulch to stop soil splashing onto leaves",
+   "Stake plants and rotate crops for 2-3 years"
+  ]
+ },
+ "recB": {
+  "urgency": "Monitor closely",
+  "actions": [
+   "Remove severely affected leaves",
+   "Avoid prolonged leaf wetness",
+   "Improve plant spacing and airflow",
+   "Monitor nearby plants",
+   "Apply a locally approved fungicide (e.g. chlorothalonil or mancozeb)",
+   "Re-check the plant in 3-4 days and treat if the problem spreads",
+   "Consult your nearest Krishi Vigyan Kendra (KVK) or the Kisan Call Centre (1800-180-1551) for locally approved products and doses"
+  ],
+  "notes": [
+   "Recurring outbreak: Early Blight was diagnosed 1 time(s) in North plot in the last 30 days. Escalate to an expert and plan resistant varieties / crop rotation for the next season.",
+   "Current conditions (27 C, 85% humidity) favour Early Blight - warm, humid weather with long leaf wetness. Expect faster spread; act sooner.",
+   "Crop is fruiting: check the pre-harvest interval (PHI) on any product label before spraying close to harvest.",
+   "Region: Chhattisgarh. Use only products approved for use in your state."
+  ],
+  "prevention": [
+   "Mulch to stop soil splashing onto leaves",
+   "Stake plants and rotate crops for 2-3 years"
+  ]
+ }
+}

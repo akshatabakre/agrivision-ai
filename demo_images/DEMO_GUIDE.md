@@ -4,7 +4,7 @@ All images are from the held-out **test sets** (never used in training) and were
 
 | File | Source dataset | Expected diagnosis | Confidence | Severity | Health score |
 |---|---|---|---|---|---|
-| 01_tomato_early_blight.jpg | PlantDoc (field) | Tomato - Early Blight (Disease) | 92% | Moderate | 62/100 |
+| 01_tomato_early_blight.jpg | PlantDoc (field) | Tomato - Early Blight (Disease) | 92% | Mild | 77/100 |
 | 02_maize_common_rust.jpg | PlantDoc (field) | Maize (Corn) - Common Rust (Disease) | 99% | Mild | 89/100 |
 | 03_apple_cedar_apple_rust.jpg | PlantDoc (field) | Apple - Cedar Apple Rust (Disease) | 95% | Mild | 85/100 |
 | 04_grape_black_rot.jpg | PlantDoc (field) | Grape - Black Rot (Disease) | 99% | Mild | 79/100 |
@@ -20,4 +20,4 @@ All images are from the held-out **test sets** (never used in training) and were
 - **A_not_a_leaf.jpg** - Rejected: 'No crop leaf was recognised'
 - **B_uncertain_recapture.jpg** - Abstains (55% confidence): asks for a re-capture; true class Tomato - Late Blight is its top guess
 
-Confidence can differ by a percent or two from this table because the phone re-compresses the photo.
+Confidence and health score can differ by a point or two from this table because the phone re-compresses the photo.

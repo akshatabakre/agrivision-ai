@@ -88,7 +88,7 @@ flowchart TD
 
 | Dataset | Images used | Description |
 |---|---|---|
-| PlantVillage | 15,131 (up to 400 per class) | Laboratory photographs on plain backgrounds; 38 crop-condition classes and a background class |
+| PlantVillage | 41,141 (up to 1,500 per class) | Laboratory photographs on plain backgrounds; 38 crop-condition classes and a background class |
 | PlantDoc | 2,578 | Real field photographs with natural backgrounds and lighting, mapped to 28 of the PlantVillage classes |
 
 PlantVillage is split 70 / 15 / 15 into training, validation and test sets with stratification by class.
@@ -123,7 +123,7 @@ unreadable images are removed during preparation.
 ### Abstention
 
 A wrong treatment recommendation is more harmful than a request for another photograph. The system
-therefore abstains below a confidence threshold: 0.60 for plain-background images and 0.73 for field
+therefore abstains below a confidence threshold: 0.60 for plain-background images and 0.76 for field
 photographs. The field threshold is selected automatically on the field validation set to keep the false
 diagnosis rate at or below 20%.
 
@@ -164,28 +164,29 @@ the pathogen. The engine combines this with:
 
 ## Results
 
-### Laboratory photographs (PlantVillage test set, 2,270 images, 39 classes)
+### Laboratory photographs (PlantVillage test set, 6,170 images, 39 classes)
 
 | Metric | Value |
 |---|---|
-| Accuracy | **97.0%** |
-| Macro precision / recall / F1-score | 0.970 / 0.970 / 0.970 |
-| Category routing accuracy (disease / pest / healthy / not a leaf) | 98.9% |
-| False diagnosis rate without abstention | 3.0% |
-| False diagnosis rate at confidence threshold 0.60 | **1.8%** (97.2% of images answered) |
+| Accuracy | **97.9%** |
+| Macro precision / recall / F1-score | 0.979 / 0.974 / 0.976 |
+| Category routing accuracy (disease / pest / healthy / not a leaf) | 99.4% |
+| False diagnosis rate without abstention | 2.1% |
+| False diagnosis rate at confidence threshold 0.60 | **1.3%** (98.3% of images answered) |
 
 ### Field photographs (PlantDoc test set, 236 images, 28 classes)
 
 | Metric | Value |
 |---|---|
 | Accuracy of a model trained on laboratory images only | 19.9% |
-| Accuracy of the final model (laboratory + field training) | **53.8%** |
-| Top-3 accuracy | 73.7% |
+| Accuracy of the final model (laboratory + field training) | **57.2%** |
+| Top-3 accuracy | 79.2% |
 | Category routing accuracy | 89.8% |
-| False diagnosis rate at confidence threshold 0.73 | 27.7% (55.1% of images answered) |
+| False diagnosis rate at confidence threshold 0.76 | 28.6% (53.4% of images answered) |
 
-Adding field photographs to training improved accuracy on real-world images by a factor of 2.7 while
-maintaining laboratory accuracy. The gap between the two test sets shows that models trained only on
+Adding field photographs to training, together with a larger laboratory sample, improved accuracy on
+real-world images by a factor of 2.9. On the original 2,270-image laboratory test split, which
+neither model saw during training, laboratory accuracy rose from 97.4% to 97.6%. The gap between the two test sets shows that models trained only on
 controlled laboratory images do not transfer directly to field conditions.
 
 ### Confusion matrix and abstention trade-off
@@ -201,8 +202,8 @@ Complete per-class metrics are available in [`models/metrics.json`](models/metri
 | | |
 |---|---|
 | Hardware | Intel Core i5-1035G1, 8 GB RAM, no GPU |
-| Feature extraction (one-time) | ≈ 10 minutes |
-| Classifier training | ≈ 3 minutes |
+| Feature extraction (one-time) | ≈ 23 minutes |
+| Classifier training | ≈ 5 minutes |
 | Inference | < 2 seconds per image, including segmentation |
 | Model size | 19.7 MB |
 
@@ -241,7 +242,10 @@ scripts/
   ui_test.py                automated test of the web interface
 android/                    Android application source code
 models/                     trained model, metrics and evaluation plots
-samples/                    example images from the held-out test set
+samples/                    example images for the web application (held-out test set)
+demo_images/                verified demo images for the Android application, with DEMO_GUIDE.md
+report/                     project report (PDF) and the scripts that generate it
+presentation/               final presentation (PPTX) and the scripts that generate it
 app.py                      Streamlit web application
 api.py                      FastAPI REST API
 serve_mobile.py             API launcher for the Android application
@@ -327,7 +331,7 @@ The datasets are not stored in the repository because of their size. To reproduc
 3. Run:
 
 ```bash
-python scripts/prepare_data.py --per-class 400   # sample, clean and split PlantVillage
+python scripts/prepare_data.py --per-class 1500  # sample, clean and split PlantVillage
 python scripts/add_field_data.py                 # prepare PlantDoc field photographs
 python scripts/train.py                          # extract features, train, calibrate, evaluate
 ```
@@ -346,7 +350,7 @@ python scripts/ui_test.py       # web interface
 
 **Limitations**
 
-- Accuracy on field photographs (53.8%) is substantially lower than on laboratory images (97.0%).
+- Accuracy on field photographs (57.2%) is substantially lower than on laboratory images (97.9%).
   The system compensates by abstaining on uncertain field images.
 - Pest detection is limited to spider-mite damage, the only pest class available in the training data.
 - Nutrient deficiencies are screened with colour-pattern rules rather than a trained model and require

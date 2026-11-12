@@ -10,7 +10,7 @@ from __future__ import annotations
 import csv
 import json
 import sys
-from collections import defaultdict
+from collections import Counter, defaultdict
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -190,8 +190,12 @@ hard = [("(a) Correct abstention", field_path("1234080-Early-Blight.jpg"), "Toma
         ("(b) Misclassification", field_path("55830b60a7cf2.image.jpg"), "Tomato - Septoria Leaf Spot", "original"),
         ("(c) Severity underestimated", field_path("2540_600.jpg"), "Potato - Late Blight", "overlay")]
 fig, axes = plt.subplots(1, 3, figsize=(8.4, 3.9))
+cases = []
 for a, (title, path, truth, view) in zip(axes, hard):
     res, imgs = engine.analyze(path.read_bytes(), {}, save=False)
+    cases.append({"title": title, "truth": truth, "status": res["status"], "output": res["display_name"],
+                  "confidence": res["confidence"], "top": res["top_k"][0]["name"], "top_p": res["top_k"][0]["probability"],
+                  "severity": res["severity"], "affected": res["damage"]["affected"]})
     a.imshow(imgs[view])
     a.set_xticks([])
     a.set_yticks([])
@@ -271,8 +275,25 @@ plt.close(fig)
 
 # ---------------------------------------------------------------- 6. lab vs field, before / after
 acc = lambda p, y: float((p.argmax(1) == y).mean())  # noqa: E731
-domain = {"base_lab": acc(b_lab, y_lab), "base_field": acc(b_fld, y_fld),
-          "final_lab": acc(p_lab, y_lab), "final_field": acc(p_fld, y_fld)}
+
+# The lab-only comparison model was trained when PlantVillage was sampled at 400 images per
+# class. Enlarging the sample moved some of its training images into today's test split, so
+# both models are compared on the original 2,270-image test split, which neither trained on.
+# prepare_data.py shuffles each class with a fixed seed, so that split is the first
+# round(min(n, 400) * 0.15) test rows of every class.
+import zipfile  # noqa: E402
+
+_zc = Counter(Path(n).parts[-2] for n in zipfile.ZipFile(config.DATA_DIR / "plantvillage.zip").namelist()
+              if Path(n).suffix.lower() in {".jpg", ".jpeg", ".png", ".bmp"} and len(Path(n).parts) >= 2)
+_seen, _mask = Counter(), []
+for r in (r for r in csv.DictReader(open(config.MANIFEST_PATH, encoding="utf-8")) if r["split"] == "test"):
+    _mask.append(_seen[r["label"]] < max(1, round(min(_zc[r["label"]], 400) * 0.15)))
+    _seen[r["label"]] += 1
+old_test = np.array(_mask)
+assert len(old_test) == len(y_lab)
+domain = {"base_lab": acc(b_lab[old_test], y_lab[old_test]), "base_field": acc(b_fld, y_fld),
+          "final_lab": acc(p_lab[old_test], y_lab[old_test]), "final_field": acc(p_fld, y_fld),
+          "final_lab_full": acc(p_lab, y_lab), "old_test_n": int(old_test.sum())}
 fig, ax = plt.subplots(figsize=(6.4, 3.2))
 xs = np.arange(2)
 w = 0.34
@@ -284,7 +305,8 @@ for bars in (b1, b2):
     for b in bars:
         ax.text(b.get_x() + b.get_width() / 2, b.get_height() + 1.5, f"{b.get_height():.1f}%",
                 ha="center", fontsize=9)
-ax.set_xticks(xs, ["Laboratory test set\n(PlantVillage, 2,270 images)", "Field test set\n(PlantDoc, 236 images)"])
+ax.set_xticks(xs, [f"Laboratory test set\n(PlantVillage, {int(old_test.sum()):,} images)",
+                   f"Field test set\n(PlantDoc, {len(y_fld)} images)"])
 ax.set_ylabel("Top-1 accuracy (%)")
 ax.set_ylim(0, 110)
 ax.legend(fontsize=8.5, frameon=False, loc="upper right")
@@ -341,14 +363,14 @@ plt.close(fig)
 
 # ---------------------------------------------------------------- 9. training curve (re-run of head training with logging)
 torch.manual_seed(0)
-FIELD_REPEAT = 4
+from train import FIELD_REPEAT, HEAD_KIND  # noqa: E402  (same settings as the trained model)
 fx = np.concatenate([fld["x_train"], fld["x_train_flip"]] * FIELD_REPEAT)
 fy = np.concatenate([fld["y_train"], fld["y_train"]] * FIELD_REPEAT)
 xt = torch.from_numpy(np.concatenate([lab["x_train"], fx]))
 yt = torch.from_numpy(np.concatenate([lab["y_train"], fy])).long()
 vals = [(torch.from_numpy(lab["x_val"]), torch.from_numpy(lab["y_val"]).long()),
         (torch.from_numpy(fld["x_val"]), torch.from_numpy(fld["y_val"]).long())]
-h = build_head(len(classes), "mlp")
+h = build_head(len(classes), HEAD_KIND)
 opt = torch.optim.AdamW(h.parameters(), lr=1e-3, weight_decay=1e-4)
 sched = torch.optim.lr_scheduler.CosineAnnealingLR(opt, 80)
 lossf = nn.CrossEntropyLoss(label_smoothing=0.05)
@@ -439,6 +461,10 @@ DATA_OUT.write_text(json.dumps({
     "split_counts": {k: v["n"] for k, v in counts.items()},
     "temperature": T, "field_threshold": ckpt["field_threshold"], "train_size": ckpt["train_size"],
     "train_epochs": len(hist["loss"]), "best_epoch": best_ep,
+    "field_cases": cases, "seg_naive": float(naive.mean()), "seg_grabcut": float(grab.mean()),
+    "per_crop": {c: {"lab": lab_crop[i], "field": None if np.isnan(fld_crop[i]) else fld_crop[i]} for i, c in enumerate(crops)},
+    "lab_epoch_94": next((i + 1 for i, v in enumerate(hist["lab"]) if v >= 0.94), None),
+    "field_val_mean": float(np.mean(hist["field"])), "field_repeat": FIELD_REPEAT,
     "head_params": int(sum(p.numel() for p in head.parameters())),
     "backbone_params": int(sum(v.numel() for k, v in ckpt["state_dict"].items() if k.startswith("backbone."))),
 }, indent=2))

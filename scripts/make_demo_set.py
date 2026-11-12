@@ -138,8 +138,8 @@ def main():
                      f"{res['health_score']}/100 |")
     lines += ["", "## extra_safety_checks", ""]
     lines += [f"- **{n}** - {d}" for n, d in extras]
-    lines += ["", "Confidence can differ by a percent or two from this table because the phone re-compresses the "
-              "photo.", ""]
+    lines += ["", "Confidence and health score can differ by a point or two from this table because the phone "
+              "re-compresses the photo.", ""]
     (OUT / "DEMO_GUIDE.md").write_text("\n".join(lines), encoding="utf-8")
     print("extras:", extras)
 

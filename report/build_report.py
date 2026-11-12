@@ -239,7 +239,7 @@ class Doc(BaseDocTemplate):
     def __init__(self, path):
         super().__init__(str(path), pagesize=A4, leftMargin=2.75 * cm, rightMargin=2.45 * cm,
                          topMargin=3.0 * cm, bottomMargin=2.7 * cm, title="AgriVision AI - Project Report",
-                         author="Akshata Bakre", subject="Minor Project Report",
+                         author="Akshata Bakre, Himanshu Kashyap", subject="Minor Project Report",
                          keywords="crop disease, computer vision, MobileNetV3, deep learning")
         frame = Frame(self.leftMargin, self.bottomMargin, self.width, self.height, id="f", leftPadding=0,
                       rightPadding=0, topPadding=0, bottomPadding=0)
@@ -443,6 +443,10 @@ def equation(tex, fontsize=15):
     return eq_no[0]
 
 
+REPO_URL = "https://github.com/akshatabakre/agrivision-ai"
+REPO_LINK = f'<a href="{REPO_URL}"><font color="#1f4e8c"><u>{REPO_URL}</u></font></a>'
+
+
 def pct(x, d=1):
     return f"{x * 100:.{d}f}%"
 
@@ -488,7 +492,8 @@ story += [Image(str(FIG / "nitrr_logo_0.jpg"), width=lw, height=lw * logo.height
                     "photograph using computer vision", cover_sub),
           Spacer(1, 1.6 * cm)]
 who = Table([[Paragraph("Submitted by:", cover_lab), Paragraph("Guided by:", cover_lab)],
-             [Paragraph("Akshata Bakre (23118007)", cover_val), Paragraph("Dr. Sanjay Kumar", cover_val)]],
+             [Paragraph("1. Akshata Bakre (23118007)", cover_val), Paragraph("Dr. Sanjay Kumar", cover_val)],
+             [Paragraph("2. Himanshu Kashyap (23118043)", cover_val), ""]],
             colWidths=[9.2 * cm, 6.3 * cm])
 who.setStyle(TableStyle([("LEFTPADDING", (0, 0), (-1, -1), 0), ("ALIGN", (1, 0), (1, -1), "LEFT")]))
 who.hAlign = "LEFT"
@@ -524,6 +529,8 @@ P(f"The model was trained on {D['split_counts']['lab_train']:,} laboratory image
 P("<b>Keywords:</b> plant disease detection, computer vision, transfer learning, MobileNetV3, image "
   "segmentation, confidence calibration, selective classification, precision agriculture.",
   ParagraphStyle("kw", parent=body, spaceBefore=6))
+P(f"<b>Source code:</b> the complete project &#8212; code, trained model, Android application and "
+  f"documentation &#8212; is available at {REPO_LINK}.", ParagraphStyle("repo", parent=body, spaceBefore=4))
 
 story += [PageBreak(), Paragraph("Contents", front_h)]
 toc = TableOfContents(formatter=page_fmt)
@@ -760,8 +767,8 @@ section("Datasets and Data Preparation")
 P(f"Two public datasets are used (Table 4). PlantVillage {C('hughes', 'geetharamani')} provides laboratory "
   f"images of 38 crop conditions photographed on uniform backgrounds, together with a class of background "
   f"images without leaves, which the system uses to reject photographs that do not contain a leaf. To keep "
-  f"training feasible on a CPU and to limit class imbalance, at most 400 images were sampled per class with a "
-  f"fixed random seed, giving 15,131 images that were split 70/15/15 into training, validation and test sets "
+  f"training feasible on a CPU and to limit class imbalance, at most 1,500 images were sampled per class with a "
+  f"fixed random seed, giving {sum(D['split_counts'][k] for k in ('lab_train', 'lab_val', 'lab_test')):,} images that were split 70/15/15 into training, validation and test sets "
   f"with stratification by class. Unreadable files were removed during preparation.")
 P(f"PlantDoc {C('plantdoc')} contributes photographs taken in natural conditions, with foliage, soil, hands and "
   f"structures in the background. Its class names were mapped onto the PlantVillage labels (for example, "
@@ -821,7 +828,7 @@ P(f"These cues seed the GrabCut algorithm {C('grabcut')}, which models foregroun
   f"definite background, in-focus plant-coloured pixels (<i>F</i> &gt; 0.35) as probable foreground, and all "
   f"others as probable background. Five iterations are run on a copy downscaled to 400 pixels, and the component "
   f"that best combines size and centrality is kept. {'Figure 2'} compares the two strategies on a field "
-  f"photograph: colour thresholding selects 87% of the frame, including the fence and post, whereas the "
+  f"photograph: colour thresholding selects {D['seg_naive']:.0%} of the frame, including the fence and post, whereas the "
   f"focus-seeded GrabCut isolates the leaf.")
 figure("seg", FIG / "fig_segmentation.png",
        "Leaf segmentation on a field photograph from the PlantDoc test set. Green outline: detected leaf; blue: "
@@ -853,7 +860,7 @@ P(f"Fine-tuning the entire network on a CPU would require a forward and backward
   f"every image in every epoch. Because the backbone is frozen, each image needs to pass through it only once: "
   f"the embeddings of all images are computed and cached, after which the head is trained on the cached "
   f"embeddings in seconds per epoch {C('yosinski')}. Field photographs are mirrored horizontally as "
-  f"augmentation and oversampled four times, so that the {sc['field_train']:,} field images carry weight "
+  f"augmentation and oversampled {D['field_repeat']} times, so that the {sc['field_train']:,} field images carry weight "
   f"comparable to the {sc['lab_train']:,} laboratory images; the final training set contains "
   f"{D['train_size']:,} embeddings. The loss is cross-entropy with label smoothing {C('szegedy')}:")
 equation(r"\mathcal{L} = -\sum_{k=1}^{K} q_{k} \log p_{k}, \qquad q_{k} = (1-\varepsilon)\, y_{k} + \frac{\varepsilon}{K}, \quad \varepsilon = 0.05")
@@ -869,7 +876,7 @@ table("hyper", [
     ["Batch size / maximum epochs", "128 / 80 (cosine schedule)"],
     ["Early stopping", f"patience 15; stopped after {D['train_epochs']} epochs, best epoch {D['best_epoch']}"],
     ["Label smoothing", "0.05"],
-    ["Field-image weighting", "horizontal mirroring, 4&#215; oversampling"],
+    ["Field-image weighting", f"horizontal mirroring, {D['field_repeat']}&#215; oversampling"],
     ["Training embeddings", f"{D['train_size']:,}"],
     ["Temperature <i>T</i>", f"{D['temperature']:.3f}"],
     ["Abstention thresholds", f"0.60 (plain background), {D['field_threshold']:.2f} (field)"],
@@ -975,6 +982,8 @@ section("Software Organisation")
 P("The core logic is implemented as a Python package, <font face='Mono' size='10'>agrivision</font>, that is "
   "shared by all interfaces, so that the web application, REST API and Android application produce identical "
   "results. Table 9 lists its modules.")
+P(f"The full source code, the trained model, the Android application package, the training and evaluation "
+  f"scripts and setup instructions are published in the project repository: {REPO_LINK}.")
 table("modules", [
     ["Module", "Responsibility"],
     ["preprocessing.py", "Decoding, validation, CLAHE, both segmentation strategies, tissue colour maps, overlays"],
@@ -1089,16 +1098,19 @@ figure("cm", FIG / "fig_confusion.png", "Row-normalised confusion matrix on the 
 section("Performance on Field Photographs")
 dm = D["domain"]
 P(f"Field photographs are substantially harder (Table 12, {'Figure 9'}). A model trained only on laboratory "
-  f"images, with the same architecture, reaches {pct(dm['base_lab'])} on the laboratory test set but only "
+  f"images, with the same architecture, reaches {pct(dm['base_lab'])} on laboratory test images but only "
   f"{pct(dm['base_field'])} on the field test set: it has learned to rely on cues, such as the uniform grey "
-  f"background, that are absent in the field. Adding the PlantDoc training images raises field accuracy to "
-  f"{pct(dm['final_field'])}, a factor of {dm['final_field'] / dm['base_field']:.1f}, while laboratory accuracy "
-  f"changes by only {(dm['final_lab'] - dm['base_lab']) * 100:+.1f} percentage points. The correct class is "
+  f"background, that are absent in the field. Adding the PlantDoc field photographs to training, together with "
+  f"a larger laboratory sample, raises field accuracy to {pct(dm['final_field'])}, a factor of "
+  f"{dm['final_field'] / dm['base_field']:.1f}, while accuracy on the same {dm['old_test_n']:,} laboratory test "
+  f"images rises from {pct(dm['base_lab'])} to {pct(dm['final_lab'])}. (The two models are compared on the "
+  f"original {dm['old_test_n']:,}-image laboratory test split, which neither model saw during training.) The correct class is "
   f"among the three most probable in {pct(FM['top3_accuracy'])} of field images, and the category is correct "
   f"in {pct(FM['category_accuracy'])}, which matters because the category determines the type of advice.")
 table("field", [
     ["Metric", "Laboratory-only model", "Final model"],
-    ["Accuracy on laboratory test set", pct(dm["base_lab"]), pct(dm["final_lab"])],
+    [f"Accuracy on original laboratory test split ({dm['old_test_n']:,} images)", pct(dm["base_lab"]), pct(dm["final_lab"])],
+    [f"Accuracy on full laboratory test set ({M['test_images']:,} images)", "&#8212;", pct(dm["final_lab_full"])],
     ["Accuracy on field test set", pct(dm["base_field"]), f"<b>{pct(dm['final_field'])}</b>"],
     ["Field top-3 accuracy", "&#8212;", pct(FM["top3_accuracy"])],
     ["Field macro F1-score", "&#8212;", f"{FM['f1_macro']:.3f}"],
@@ -1120,7 +1132,7 @@ figure("crop", FIG / "fig_per_crop.png", "Accuracy by crop on the laboratory and
 section("Abstention Trade-off")
 P(f"{'Figure 11'} shows coverage and false diagnosis rate as functions of the confidence threshold. On "
   f"laboratory images, almost all predictions are confident and correct, so a threshold of 0.60 removes "
-  f"roughly 40% of the remaining errors while answering {pct(M['coverage_at_threshold'])} of images. On field "
+  f"{1 - M['false_diagnosis_rate_at_threshold'] / M['false_diagnosis_rate_no_abstention']:.0%} of the remaining errors while answering {pct(M['coverage_at_threshold'])} of images. On field "
   f"photographs, the stricter threshold of {FM['confidence_threshold']:.2f} reduces the false diagnosis rate "
   f"from {pct(1 - FM['accuracy'])} without abstention to {pct(FM['false_diagnosis_rate_at_threshold'])}, at the "
   f"cost of asking for a new photograph for {pct(1 - FM['coverage_at_threshold'])} of field images. The "
@@ -1141,7 +1153,7 @@ section("Qualitative Results")
 q = D["qualitative"]
 P(f"{'Figure 13'} shows the complete pipeline on two laboratory images and two field photographs. The "
   f"laboratory tomato leaf with early blight is diagnosed with {q[0]['confidence']:.0%} confidence and "
-  f"{q[0]['affected']:.0%} damaged tissue, giving a <i>Mild</i> rating, whereas the heavily affected potato leaf "
+  f"{q[0]['affected']:.0%} damaged tissue, giving a <i>{q[0]['severity']}</i> rating, whereas the heavily affected potato leaf "
   f"has {q[1]['affected']:.0%} damaged tissue and is rated <i>Severe</i> with a health score of {q[1]['score']}. "
   f"The field photographs of cedar apple rust and grape black rot are correctly isolated from foliage and soil, "
   f"and their lesions are highlighted in the damage map.")
@@ -1149,12 +1161,12 @@ figure("qual", FIG / "fig_qualitative.png", "Qualitative results: input, leaf se
        "necrotic, yellow: chlorotic, blue: powdery) and system output for two laboratory images (rows 1&#8211;2) "
        "and two field photographs (rows 3&#8211;4)", width=14.5 * cm)
 P(f"{'Figure 14'} shows three characteristic difficulties on field photographs. In (a), the correct class is "
-  f"the most probable but with only 28% confidence, and the system correctly asks for a new photograph instead "
+  f"the most probable but with only {D['field_cases'][0]['top_p']:.0%} confidence, below the {D['field_threshold']:.2f} field threshold, and the system correctly asks for a new photograph instead "
   f"of guessing. In (b), Septoria leaf spot is confidently classified as early blight; both diseases produce "
   f"dark lesions surrounded by yellowing, and the photograph shows several overlapping leaves. In (c), the diagnosis "
   f"of late blight is correct, but the dark, low-saturation lesion at the leaf edge is excluded by the "
   f"segmentation, so the damaged area is underestimated; the minimum severity for late blight still yields a "
-  f"<i>Moderate</i> rating.")
+  f"<i>{D['field_cases'][2]['severity']}</i> rating.")
 figure("cases", FIG / "fig_field_cases.png", "Challenging field photographs: correct abstention (a), "
        "misclassification between similar diseases (b) and underestimated damage area (c)", width=15.5 * cm)
 
@@ -1162,8 +1174,8 @@ section("Computational Performance")
 P("Table 13 summarises the computational cost. All figures were measured on the laptop described above.")
 table("perf", [
     ["Item", "Value"],
-    ["Feature extraction, all training/validation/test images (one-time)", "&#8776; 10 minutes"],
-    ["Classification head training", "&#8776; 3 minutes"],
+    ["Feature extraction, all training/validation/test images (one-time)", "&#8776; 23 minutes"],
+    ["Classification head training", "&#8776; 5 minutes"],
     ["Full diagnosis, plain-background photograph", f"{T_LAB:.2f} s"],
     ["Full diagnosis, field photograph (including GrabCut)", f"{T_FLD:.2f} s"],
     ["Model file size (backbone + head)", "19.7 MB"],
@@ -1193,7 +1205,7 @@ P("Because field accuracy is moderate, the system's behaviour on uncertain input
   "correct.")
 section("Design Trade-offs")
 P("Freezing the backbone and training only the head made it possible to train the complete model on a CPU in "
-  "about a quarter of an hour, at the cost of not adapting the convolutional features to plant imagery. Severity "
+  "under half an hour, at the cost of not adapting the convolutional features to plant imagery. Severity "
   "and nutrient screening are implemented with explicit colour rules rather than learned models. This choice "
   "makes their output explainable &#8212; the damage map shows exactly which pixels were counted &#8212; and "
   "requires no labelled severity or deficiency data, which is not available in the public datasets; the price "

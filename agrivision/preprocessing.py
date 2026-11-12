@@ -132,20 +132,27 @@ def _segment_field(rgb: np.ndarray) -> np.ndarray:
     focus /= max(float(np.percentile(focus, 99)), 1e-6)
     plant = _plant_pixels(small)
 
+    def colour_fallback():
+        return _largest_filled(cv2.resize(plant.astype(np.uint8), (w0, h0)) > 0, prefer_centre=True)
+
     gc = np.full((hs, ws), cv2.GC_PR_BGD, np.uint8)
     gc[focus < 0.12] = cv2.GC_BGD
     gc[plant & (focus > 0.35)] = cv2.GC_PR_FGD
     if not (gc == cv2.GC_PR_FGD).any() or not np.isin(gc, (cv2.GC_BGD, cv2.GC_PR_BGD)).any():
-        return _largest_filled(cv2.resize(plant.astype(np.uint8), (w0, h0)) > 0, prefer_centre=True)
+        return colour_fallback()
 
     bgd, fgd = np.zeros((1, 65), np.float64), np.zeros((1, 65), np.float64)
+    cv2.setRNGSeed(12345)   # GrabCut's k-means initialisation is random: keep results repeatable
     try:
         cv2.grabCut(cv2.cvtColor(small, cv2.COLOR_RGB2BGR), gc, None, bgd, fgd, 5, cv2.GC_INIT_WITH_MASK)
     except cv2.error:
-        return _largest_filled(cv2.resize(plant.astype(np.uint8), (w0, h0)) > 0, prefer_centre=True)
+        return colour_fallback()
     fg = ((gc == cv2.GC_FGD) | (gc == cv2.GC_PR_FGD)).astype(np.uint8)
     fg = cv2.resize(fg, (w0, h0), interpolation=cv2.INTER_NEAREST) > 0
-    return _largest_filled(fg, prefer_centre=True)
+    leaf = _largest_filled(fg, prefer_centre=True)
+    if leaf.mean() < config.MIN_LEAF_FRACTION:   # GrabCut collapsed onto a tiny region
+        return colour_fallback()
+    return leaf
 
 
 def is_plain_background(rgb: np.ndarray) -> bool:
